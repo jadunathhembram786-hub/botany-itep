@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Botany ITEP — interactive Botany notes, important questions, revision and quizzes.">
+<title>Botany ITEP | Plant Science Study Hub</title>
+<style>
+:root{--green:#174b36;--green2:#236b4c;--mint:#dff1e6;--cream:#fbf8ef;--paper:#fff;--ink:#17231d;--muted:#65736b;--line:#dce5de;--gold:#c99a3e;--danger:#a83b3b;--shadow:0 14px 40px #174b3614}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--cream);line-height:1.65}
+button,input,select{font:inherit}.top{position:sticky;top:0;z-index:20;background:#fffdf8ee;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;display:flex;align-items:center;gap:24px;padding:14px 20px}.brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--green);font-size:1.2rem;cursor:pointer}.leaf{font-size:1.7rem}.navlinks{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}.navlinks button{border:0;background:transparent;padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:700}.navlinks button:hover,.navlinks button.active{background:var(--mint);color:var(--green)}
+.hero{background:linear-gradient(135deg,#174b36 0%,#246a4d 62%,#5e8c67 100%);color:white;padding:72px 20px 64px;overflow:hidden}.hero-inner{max-width:1180px;margin:auto;display:grid;grid-template-columns:1.25fr .75fr;gap:45px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:900;opacity:.8}.hero h1{font-size:clamp(2.5rem,6vw,5rem);line-height:.98;margin:14px 0 20px;letter-spacing:-.05em}.hero p{font-size:1.12rem;max-width:650px;color:#e9f5ed}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:850;cursor:pointer}.btn.primary{background:#fff;color:var(--green)}.btn.dark{background:#113a2a;color:#fff}.btn.gold{background:var(--gold);color:#1d251f}.botanical{font-size:13rem;text-align:center;filter:drop-shadow(0 20px 30px #001f1133);transform:rotate(-10deg)}
+.container{max-width:1180px;margin:auto;padding:40px 20px}.section-title{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:20px}.section-title h2{margin:0;font-size:2rem;letter-spacing:-.03em}.muted{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-25px;position:relative}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}.stat b{font-size:1.7rem;color:var(--green);display:block}.stat span{color:var(--muted);font-size:.9rem}
+.units{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}.unit{cursor:pointer;transition:.2s}.unit:hover{transform:translateY(-4px);border-color:#a9cbb8}.unit-icon{font-size:2rem}.unit h3{margin:8px 0 3px;color:var(--green)}.tag{display:inline-block;background:var(--mint);color:var(--green);border-radius:999px;padding:3px 9px;font-size:.75rem;font-weight:800}.bar{height:7px;background:#e8eee9;border-radius:10px;overflow:hidden;margin-top:16px}.bar i{display:block;height:100%;background:var(--green2);width:0}
+.view{display:none}.view.active{display:block}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.search{flex:1;min-width:240px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 15px;outline:0}.select{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px}.back{margin-bottom:15px;border:0;background:transparent;color:var(--green);font-weight:800;cursor:pointer}
+.topic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.topic{border-left:4px solid var(--green2)}.topic h3{margin-top:0;color:var(--green)}.topic ul{padding-left:20px}.formula{background:#f0f6f1;border:1px dashed #9db9a7;padding:14px;border-radius:12px;font-family:Georgia,serif}
+.questions{display:grid;gap:12px}.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer}.q strong{color:var(--green)}.answer{display:none;margin-top:10px;color:var(--muted)}.q.open .answer{display:block}
+.quizbox{max-width:800px;margin:auto}.option{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px;margin:9px 0;cursor:pointer}.option:hover{border-color:var(--green2)}.option.correct{border-color:#31805a;background:#eaf7ef}.option.wrong{border-color:var(--danger);background:#fff0f0}.result{padding:18px;border-radius:14px;background:var(--mint);margin-top:18px}
+.footer{background:#123a2a;color:#dceee3;margin-top:50px;padding:35px 20px}.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px}
+.notice{padding:13px 16px;background:#fff7dc;border:1px solid #ead8a2;border-radius:12px;margin:15px 0}.empty{padding:35px;text-align:center;color:var(--muted);background:#fff;border-radius:15px;border:1px dashed var(--line)}
+@media(max-width:800px){.hero-inner{grid-template-columns:1fr}.botanical{display:none}.units,.stats{grid-template-columns:1fr 1fr}.topic-grid{grid-template-columns:1fr}.nav{align-items:flex-start}.navlinks{margin-left:0}}
+@media(max-width:520px){.units,.stats{grid-template-columns:1fr}.hero{padding-top:45px}.nav{flex-wrap:wrap}.navlinks{width:100%;overflow:auto;flex-wrap:nowrap}}
+</style>
+</head>
+<body>
+<header class="top">
+<nav class="nav">
+<div class="brand" onclick="showView('home')"><span class="leaf">🌿</span> Botany ITEP</div>
+<div class="navlinks">
+<button data-view="home" onclick="showView('home')">Home</button>
+<button data-view="units" onclick="showView('units')">Units</button>
+<button data-view="questions" onclick="showView('questions')">Questions</button>
+<button data-view="quiz" onclick="showView('quiz')">Quiz</button>
+<button data-view="guide" onclick="showView('guide')">Study Guide</button>
+</div>
+</nav>
+</header>
+
+<main>
+<section id="home" class="view active">
+<div class="hero"><div class="hero-inner">
+<div><div class="eyebrow">Interactive Plant Science Study Hub</div><h1>Learn Botany.<br><em>Grow Smarter.</em></h1>
+<p>Complete ITEP-focused study material for plant physiology, mineral nutrition, photosynthesis, respiration, growth regulation, biomolecules and enzymes.</p>
+<div class="actions"><button class="btn primary" onclick="showView('units')">Explore 6 Units →</button><button class="btn dark" onclick="showView('quiz')">Practice Quiz</button></div></div>
+<div class="botanical">🌱</div></div></div>
+<div class="container">
+<div class="stats"><div class="stat"><b>6</b><span>Core units</span></div><div class="stat"><b>60</b><span>Hours / syllabus</span></div><div class="stat"><b id="progressStat">0%</b><span>Progress completed</span></div><div class="stat"><b>∞</b><span>Revision potential</span></div></div>
+<div style="margin-top:50px" class="section-title"><div><h2>What you'll study</h2><p class="muted">Everything organized for fast learning and exam revision.</p></div></div>
+<div class="units" id="homeUnits"></div>
+</div></section>
+
+<section id="units" class="view"><div class="container">
+<button class="back" onclick="showView('home')">← Back to home</button>
+<div class="section-title"><div><h2>Six Units</h2><p class="muted">Select a unit to open detailed notes and mark topics complete.</p></div></div>
+<div class="units" id="unitList"></div>
+</div></section>
+
+<section id="unitDetail" class="view"><div class="container">
+<button class="back" onclick="showView('units')">← All units</button>
+<div id="unitContent"></div>
+</div></section>
+
+<section id="questions" class="view"><div class="container">
+<div class="section-title"><div><h2>Important Questions</h2><p class="muted">Click any question to reveal the answer focus.</p></div></div>
+<div class="toolbar"><input id="qSearch" class="search" placeholder="Search questions, topics or units…" oninput="renderQuestions()"><select id="qFilter" class="select" onchange="renderQuestions()"><option value="all">All units</option><option value="long">Long answer</option><option value="short">Short answer</option></select></div>
+<div id="questionList" class="questions"></div>
+</div></section>
+
+<section id="quiz" class="view"><div class="container"><div class="quizbox">
+<div class="section-title"><div><h2>Practice Quiz</h2><p class="muted">Test your recall across the syllabus.</p></div></div>
+<div class="card" id="quizCard"></div>
+</div></div></section>
+
+<section id="guide" class="view"><div class="container"><div class="section-title"><div><h2>Study Guide</h2><p class="muted">A practical way to prepare.</p></div></div>
+<div class="topic-grid">
+<div class="card topic"><h3>🌱 1. Build concepts</h3><p>Read the detailed unit notes first. Focus on definitions, mechanisms, pathways and cause-and-effect relationships.</p></div>
+<div class="card topic"><h3>✏️ 2. Practice diagrams</h3><p>Practice water potential relationships, stomata, photosystems, Z-scheme, C3/C4 pathways, TCA cycle and phytochrome responses.</p></div>
+<div class="card topic"><h3>🎯 3. Attack questions</h3><p>Use the important-question bank after each unit. Try answering from memory before revealing the answer focus.</p></div>
+<div class="card topic"><h3>🧠 4. Revise actively</h3><p>Mark topics complete, take the quiz repeatedly and revisit anything you miss.</p></div>
+</div>
+<div class="notice"><b>Exam tip:</b> For long answers, use a definition → mechanism/pathway → labelled diagram or flowchart → significance → conclusion structure.</div>
+</div></section>
+</main>
+
+<footer class="footer"><div class="footer-inner"><div><b>🌿 Botany ITEP</b><br>Study. Revise. Grow.</div><div>Six units • Notes • Questions • Quizzes</div></div></footer>
+
+<script>
+const units=[
+{id:1,title:"Plant-Water Relations",icon:"💧",topics:[
+["1.1 Importance of Water in Plants",`<p>Water is quantitatively and physiologically one of the most important substances in plants. Young, actively growing tissues may contain roughly 80–95% water, while dry or dormant tissues contain much less. Water is continuously absorbed from the soil, transported through the plant and eventually lost mainly by transpiration.</p>
+<h4>Major functions</h4><ul><li><b>Universal solvent:</b> dissolves mineral salts, sugars, gases and many metabolites, allowing biochemical reactions and transport.</li><li><b>Reaction medium and reactant:</b> hydrolysis reactions require water; water is also oxidized during the light reactions of photosynthesis.</li><li><b>Structural role:</b> hydration of macromolecules and turgor pressure help maintain cell and tissue form.</li><li><b>Transport:</b> water carries ions through xylem and helps establish phloem pressure flow.</li><li><b>Growth:</b> vacuolar water uptake produces turgor that drives cell expansion.</li><li><b>Temperature control:</b> evaporation during transpiration removes heat because water has a high latent heat of vaporization.</li><li><b>Seed germination:</b> imbibition hydrates tissues, activates enzymes and resumes metabolism.</li></ul>
+<div class="formula"><b>Photosynthesis:</b> 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂<br>Water is the source of electrons and protons in the light reaction; molecular oxygen is released from water oxidation.</div>
+<h4>Important properties of water</h4><ul><li>High specific heat → buffers temperature changes.</li><li>High latent heat of vaporization → efficient evaporative cooling.</li><li>Cohesion between water molecules → continuity of xylem water columns.</li><li>Adhesion to hydrophilic xylem walls → helps maintain water columns.</li><li>Relatively high surface tension → important in capillary phenomena.</li></ul>`],
+["1.2 Water Potential and Its Components",`<p><b>Water potential (Ψw)</b> expresses the tendency of water to move from one system to another. Water moves spontaneously from a region of higher water potential to a region of lower water potential, provided a pathway exists.</p>
+<div class="formula">For a typical plant cell: <b>Ψw = Ψs + Ψp</b><br>More generally: Ψw = Ψs + Ψp + Ψm + Ψg</div>
+<h4>Solute potential (Ψs)</h4><p>Also called osmotic potential. Dissolved solutes lower the free energy of water, so Ψs is normally zero in pure water and negative in solutions. Increasing solute concentration makes Ψs more negative.</p>
+<p>For dilute solutions, <b>Ψs = −iCRT</b>, where i is the van't Hoff factor, C is molar concentration, R is the gas constant and T is absolute temperature.</p>
+<h4>Pressure potential (Ψp)</h4><p>Pressure potential is the hydrostatic pressure component. In a turgid cell, pressure against the wall is positive. In xylem under transpiration tension, pressure can be negative.</p>
+<h4>Matric potential (Ψm)</h4><p>It describes the effect of adsorption of water to surfaces such as cell walls and soil particles. It is especially important in dry soils and seeds.</p>
+<h4>Gravitational potential (Ψg)</h4><p>It becomes important over large vertical distances because gravity affects the energy state of water.</p>
+<h4>Example</h4><p>If Cell A has Ψw = −0.2 MPa and Cell B has Ψw = −0.8 MPa, water tends to move from A to B. Remember: <b>−0.2 MPa is higher than −0.8 MPa.</b></p>`],
+["1.3 Osmosis, Turgor, Plasmolysis and Imbibition",`<p><b>Osmosis</b> is the net movement of water through a selectively permeable membrane down its water-potential gradient. It is passive: no direct ATP expenditure is required for the movement itself.</p>
+<h4>Terms</h4><ul><li><b>Endosmosis:</b> net water entry into a cell or system.</li><li><b>Exosmosis:</b> net water loss.</li><li><b>Turgor pressure:</b> pressure exerted by the cell contents against the cell wall.</li><li><b>Plasmolysis:</b> shrinkage of the protoplast away from the cell wall after water loss in a hypertonic medium.</li><li><b>Deplasmolysis:</b> recovery after water re-enters a plasmolysed cell.</li><li><b>Imbibition:</b> adsorption and absorption of water by hydrophilic colloids such as dry cell walls, seeds and cellulose; it can generate considerable imbibitional pressure.</li></ul>
+<h4>Plasmolysis sequence</h4><p>Turgid cell → water leaves → flaccidity → incipient plasmolysis → evident plasmolysis. In a living plant cell, the plasma membrane remains selectively permeable while the wall prevents unlimited expansion.</p>
+<p><b>Incipient plasmolysis</b> is the stage at which the protoplast has just begun to separate from the wall. It is useful experimentally for estimating cell sap concentration.</p>`],
+["1.4 Water Absorption by Roots and Pathways",`<p>Roots absorb water mainly through young regions bearing root hairs. Root hairs greatly increase the surface area in contact with the soil solution.</p>
+<h4>Pathways through the root</h4><ul><li><b>Apoplast:</b> movement through cell walls and intercellular spaces without crossing plasma membranes at each cell.</li><li><b>Symplast:</b> movement through the continuous cytoplasm connected by plasmodesmata.</li><li><b>Transmembrane pathway:</b> repeated crossing of plasma and/or vacuolar membranes.</li></ul>
+<p>The <b>Casparian strip</b> in the endodermis contains hydrophobic material and blocks unrestricted apoplastic movement into the stele. Water and ions must therefore cross a membrane before entering the vascular cylinder.</p>
+<h4>Factors</h4><p>Water absorption depends on soil water potential, root surface area, membrane permeability, aquaporins, soil aeration, temperature, solute concentration and transpiration demand.</p>`],
+["1.5 Transpiration and Its Significance",`<p><b>Transpiration</b> is the loss of water vapour from aerial plant organs, especially leaves. It differs from guttation because transpiration releases water mainly as vapour whereas guttation releases liquid droplets.</p>
+<h4>Types</h4><ul><li><b>Stomatal:</b> through stomatal pores; usually the dominant route.</li><li><b>Cuticular:</b> through the cuticle.</li><li><b>Lenticular:</b> through lenticels in woody organs.</li></ul>
+<h4>Why does water leave?</h4><p>Internal leaf air spaces are close to saturation with water vapour, while the external atmosphere is often less humid. This vapour-pressure gradient drives diffusion. The pathway includes evaporation from moist cell surfaces, diffusion through intercellular spaces and movement through stomata to the atmosphere.</p>
+<h4>Significance</h4><ul><li>Creates tension contributing to the ascent of xylem sap.</li><li>Supports mineral transport.</li><li>Provides evaporative cooling.</li><li>Maintains a continuous water stream and nutrient delivery.</li></ul>
+<p><b>Cohesion-tension theory:</b> evaporation lowers water potential in leaves, creating tension in xylem; cohesion between water molecules and adhesion to xylem walls help maintain the continuous column.</p>`],
+["1.6 Stomatal Movement",`<p>Stomata are pores controlled by guard cells. Opening and closing regulate the trade-off between CO₂ entry for photosynthesis and water loss.</p>
+<h4>Opening mechanism</h4><p>In many plants, light activates guard-cell plasma-membrane H⁺-ATPases. Proton extrusion hyperpolarizes the membrane, promoting K⁺ uptake through inward channels. Counter-ions such as Cl⁻ and organic anions including malate²⁻ accumulate. Solute accumulation lowers guard-cell Ψs; water enters osmotically, increasing turgor. Because guard cells have specialized wall architecture, increased turgor opens the pore.</p>
+<h4>Closing</h4><p>During drought, the hormone ABA promotes ion efflux. K⁺ and anions leave, water follows, guard-cell turgor falls and the pore closes.</p>
+<h4>Factors</h4><p>Light, CO₂ concentration, leaf water status, ABA, temperature, humidity and circadian rhythms influence stomatal aperture.</p>`],
+["1.7 Factors Affecting Transpiration",`<h4>External factors</h4><ul><li><b>Temperature:</b> generally increases evaporation and transpiration; extreme heat can induce stomatal closure.</li><li><b>Humidity:</b> high humidity lowers the vapour-pressure gradient and decreases transpiration; dry air increases it.</li><li><b>Wind:</b> moderate wind removes the humid boundary layer and increases loss; very strong wind can trigger stomatal closure.</li><li><b>Light:</b> often increases stomatal opening and leaf temperature, raising transpiration.</li><li><b>Atmospheric pressure:</b> lower pressure can facilitate diffusion of water vapour.</li><li><b>Soil water:</b> drought lowers plant water status and commonly causes stomatal closure.</li></ul>
+<h4>Internal factors</h4><p>Leaf area, stomatal density and distribution, cuticle thickness, hairs, leaf orientation, succulence and anatomical adaptations all modify transpiration.</p>
+<p><b>Xerophyte adaptations:</b> thick cuticle, sunken stomata, hairs, reduced leaves, succulence and stomatal regulation reduce water loss.</p>`],
+["1.8 Root Pressure",`<p><b>Root pressure</b> is positive hydrostatic pressure that develops in root xylem when ions accumulate in the stele, lowering xylem water potential and causing osmotic water entry.</p>
+<h4>Sequence</h4><p>Ion uptake/accumulation → lower xylem Ψw → water enters xylem → positive hydrostatic pressure → upward push of xylem sap.</p>
+<p>Root pressure can be demonstrated by <b>bleeding</b> from a cut stem or root under suitable conditions. It is often strongest when transpiration is low and soil water is abundant.</p>
+<p><b>Limitation:</b> root pressure alone cannot account for the rise of water to the tops of tall trees; transpiration pull and cohesion are central to long-distance ascent.</p>`],
+["1.9 Guttation",`<p><b>Guttation</b> is the exudation of liquid water droplets, usually from leaf margins or tips, through specialized structures called <b>hydathodes</b>.</p>
+<p>It is favoured by moist soil, high relative humidity and low transpiration, especially at night or early morning. Root pressure can force xylem sap toward hydathodes. The droplets may contain dissolved mineral salts, so dried guttation can leave a residue.</p>
+<div class="formula"><b>Guttation:</b> liquid water + hydathodes + often root pressure<br><b>Transpiration:</b> water vapour + mainly stomata + vapour-pressure gradient</div>`]
+]},
+{id:2,title:"Mineral Nutrition",icon:"🪨",topics:[
+["2.1 Essential Mineral Elements and Criteria",`<p>Mineral nutrition is the study of the absorption, distribution, functions and metabolism of inorganic elements required by plants.</p>
+<h4>Criteria for essentiality</h4><ol><li>The element is necessary for completion of the normal life cycle.</li><li>Its requirement is specific: another element cannot completely substitute for it.</li><li>It has a direct role in plant nutrition, such as being part of an essential metabolite or required for a key enzymatic process.</li></ol>
+<p>Plants obtain C, H and O mainly from CO₂ and H₂O, while other mineral nutrients are obtained largely from soil.</p>`],
+["2.2 Macronutrients",`<p>Macronutrients are required in relatively large amounts. <b>N, P, K, Ca, Mg and S</b> are the principal mineral macronutrients; C, H and O are also macronutrients in the broad nutritional classification.</p>
+<table><tr><th>Element</th><th>Major role</th><th>Typical deficiency clue</th></tr><tr><td>N</td><td>Amino acids, proteins, nucleic acids, chlorophyll</td><td>General chlorosis, older leaves first</td></tr><tr><td>P</td><td>ATP, nucleic acids, phospholipids</td><td>Stunted growth, dark/abnormal pigmentation</td></tr><tr><td>K</td><td>Osmotic regulation, enzymes, stomata</td><td>Marginal chlorosis/necrosis</td></tr><tr><td>Ca</td><td>Cell wall, membranes, signaling</td><td>Young tissues/meristems affected</td></tr><tr><td>Mg</td><td>Central atom of chlorophyll; enzyme activator</td><td>Interveinal chlorosis of older leaves</td></tr><tr><td>S</td><td>Cysteine, methionine, coenzymes</td><td>Chlorosis often in younger tissues</td></tr></table>`],
+["2.3 Micronutrients",`<p>Micronutrients are needed in trace quantities but are indispensable. Common plant micronutrients are <b>Fe, Mn, Zn, Cu, B, Mo, Cl and Ni</b>.</p>
+<table><tr><th>Element</th><th>Important role</th></tr><tr><td>Fe</td><td>Electron transport proteins; chlorophyll biosynthesis</td></tr><tr><td>Mn</td><td>Photosynthetic water oxidation and enzyme activation</td></tr><tr><td>Zn</td><td>Enzyme function and regulatory proteins</td></tr><tr><td>Cu</td><td>Redox proteins including plastocyanin; enzymes</td></tr><tr><td>B</td><td>Cell wall integrity, membrane/reproductive processes</td></tr><tr><td>Mo</td><td>Nitrate reductase and nitrogen metabolism</td></tr><tr><td>Cl</td><td>Osmotic balance and photosynthetic functions</td></tr><tr><td>Ni</td><td>Essential for urease activity and nitrogen metabolism</td></tr></table>`],
+["2.4 Deficiency Symptoms and Mobility",`<p>Deficiency occurs when supply is insufficient for normal metabolism. Symptoms include chlorosis, necrosis, stunting, leaf distortion, premature senescence and poor reproduction.</p>
+<p><b>Mobile nutrients</b> can be redistributed from older tissues to young growth, so deficiency commonly appears first in older leaves. Nitrogen, phosphorus, potassium and magnesium are classic examples.</p>
+<p><b>Relatively immobile nutrients</b> are less readily redistributed, so young tissues are often affected first. Calcium and boron are important examples.</p>
+<p>Diagnosis should consider the whole pattern because symptoms can overlap and may also result from pH, toxicity, water stress or disease.</p>`],
+["2.5 Ion Transport Across Cell Membranes",`<p>Ion movement depends on the <b>electrochemical gradient</b>, which combines concentration difference and electrical potential difference.</p>
+<h4>Passive transport</h4><p>Net movement occurs down the electrochemical gradient and does not directly consume metabolic energy. Channels and some carriers facilitate passive movement.</p>
+<h4>Active transport</h4><p>Movement against a gradient requires energy. Primary active transport directly uses ATP or another energy source. Plant plasma membranes rely heavily on <b>H⁺-ATPases</b>, which pump protons outward and establish both pH and electrical gradients.</p>
+<h4>Secondary active transport</h4><p>The proton gradient generated by primary pumps drives cotransport. <b>Symport</b> moves two substances in the same direction; <b>antiport</b> moves them in opposite directions.</p>`],
+["2.6 Channels, Carriers and Pumps",`<ul><li><b>Channels:</b> membrane proteins forming selective hydrophilic pores. They can allow rapid ion movement down electrochemical gradients and often show gating.</li><li><b>Carriers/transporters:</b> bind solutes and change conformation. They can mediate facilitated diffusion or secondary active transport.</li><li><b>Pumps:</b> primary active transporters that use energy to move ions against gradients. H⁺-ATPase is a key plant example.</li></ul>
+<p>The resulting ion gradients help regulate membrane potential, nutrient uptake, pH, osmotic balance and signaling.</p>`],
+["2.7 Sugar Translocation and Pressure-Flow Hypothesis",`<p>Photosynthetic leaves are usually <b>sources</b> of sucrose, while roots, developing leaves, fruits, seeds and storage organs can act as <b>sinks</b>. Phloem sieve tubes conduct assimilates over long distances.</p>
+<h4>Pressure-flow sequence</h4><ol><li>Sucrose is produced in source tissues.</li><li>It is loaded into companion-cell/sieve-element complexes, often through active or facilitated mechanisms depending on species.</li><li>High solute concentration lowers phloem Ψw.</li><li>Water enters from xylem osmotically.</li><li>Turgor pressure rises at the source.</li><li>Bulk flow occurs through sieve tubes toward regions of lower pressure near sinks.</li><li>Sucrose is unloaded and used or stored; water can return to the xylem.</li></ol>
+<p>The model explains long-distance translocation as pressure-driven bulk flow rather than individual sucrose molecules being actively pumped all the way from leaf to root.</p>`]
+]},
+{id:3,title:"Photosynthesis",icon:"☀️",topics:[
+["3.1 Overview of Photosynthesis",`<p>Photosynthesis converts light energy into chemical energy. In oxygenic photosynthesis, plants use light to drive electron transfer and ATP/NADPH production, then use these products to reduce CO₂ into carbohydrate.</p>
+<div class="formula"><b>Overall simplified equation:</b> 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂</div>
+<p>The process has two functionally linked stages: <b>light reactions</b> in thylakoid membranes and <b>carbon fixation/reduction</b> in the chloroplast stroma through the Calvin cycle.</p>`],
+["3.2 Photosynthetic Pigments",`<p>Leaf chloroplasts contain pigment molecules that absorb particular wavelengths. The major pigments in higher plants are chlorophyll a, chlorophyll b and carotenoids (carotenes and xanthophylls).</p>
+<table><tr><th>Pigment</th><th>Role</th></tr><tr><td>Chlorophyll a</td><td>Primary reaction-centre pigment; directly involved in photochemical charge separation.</td></tr><tr><td>Chlorophyll b</td><td>Accessory pigment; transfers excitation energy to chlorophyll a.</td></tr><tr><td>Carotenes</td><td>Accessory pigments and photoprotective antioxidants.</td></tr><tr><td>Xanthophylls</td><td>Accessory pigments; important in light harvesting and dissipation of excess excitation.</td></tr></table>
+<p>The <b>absorption spectrum</b> shows wavelengths absorbed by a pigment, whereas the <b>action spectrum</b> shows the relative effectiveness of wavelengths in driving photosynthesis.</p>`],
+["3.3 Photosystems, Antenna and Reaction Centre",`<p>A <b>photosystem</b> is a pigment-protein complex embedded in the thylakoid membrane. It contains an antenna or light-harvesting system plus a reaction centre.</p>
+<p><b>Antenna molecules</b> absorb photons and transfer excitation energy between pigment molecules toward the reaction centre. This increases the effective light-capturing area.</p>
+<p><b>Reaction centre:</b> specialized chlorophyll a molecules undergo excitation and primary charge separation. <b>PSII</b> contains the P680 reaction centre; <b>PSI</b> contains P700.</p>
+<p>PSII is associated with water oxidation and oxygen evolution; PSI supplies highly reducing electrons for NADP⁺ reduction in linear electron flow.</p>`],
+["3.4 Photosystem II and Water Oxidation",`<p>PSII absorbs light and raises the energy of electrons in its reaction-centre chlorophyll. The oxidized reaction centre receives replacement electrons from water through the oxygen-evolving complex.</p>
+<div class="formula">2H₂O → O₂ + 4H⁺ + 4e⁻</div>
+<p>The released electrons enter the electron-transfer chain. Protons contribute to the thylakoid lumen proton gradient, while oxygen diffuses away as a product of water oxidation.</p>`],
+["3.5 Linear Electron Transport and Z-Scheme",`<p>In linear (non-cyclic) electron flow, electrons travel approximately:</p>
+<div class="formula">H₂O → PSII/P680 → plastoquinone → cytochrome b₆f → plastocyanin → PSI/P700 → ferredoxin → NADP⁺ → NADPH</div>
+<p>The <b>Z-scheme</b> is a conceptual representation of the changes in electron energy as electrons are excited at PSII and PSI. Two light-driven boosts are required to move electrons from water to NADP⁺.</p>
+<p>Electron transfer through the chain contributes to proton accumulation in the lumen. ATP synthase then uses the electrochemical proton gradient to synthesize ATP.</p>`],
+["3.6 Cyclic and Non-cyclic Photophosphorylation",`<table><tr><th>Feature</th><th>Non-cyclic</th><th>Cyclic</th></tr><tr><td>Photosystems</td><td>PSII + PSI</td><td>Primarily PSI</td></tr><tr><td>Electron destination</td><td>NADP⁺ reduced to NADPH</td><td>Electrons return to PSI</td></tr><tr><td>O₂ release</td><td>Yes</td><td>No</td></tr><tr><td>ATP</td><td>Produced</td><td>Produced</td></tr><tr><td>Water oxidation</td><td>Yes</td><td>No</td></tr></table>
+<p>Cyclic electron flow is useful when additional ATP is needed relative to NADPH, helping balance the energy requirements of carbon fixation.</p>`],
+["3.7 Chemiosmotic ATP Synthesis",`<p>According to the chemiosmotic mechanism, electron transport establishes a proton-motive force across the thylakoid membrane. The lumen becomes relatively enriched in H⁺ compared with the stroma.</p>
+<p>Protons flow back through the <b>CF₀–CF₁ ATP synthase</b>. Proton movement through the membrane component drives conformational/rotational changes that promote ATP formation from ADP + Pi on the stromal side.</p>
+<div class="formula">Light-driven electron transport → H⁺ gradient → proton flow through ATP synthase → ATP</div>`],
+["3.8 C3 / Calvin Cycle",`<p>The Calvin cycle occurs in the chloroplast stroma and has three broad phases: <b>carboxylation, reduction and regeneration of RuBP</b>.</p>
+<h4>Carboxylation</h4><p>Rubisco catalyzes addition of CO₂ to ribulose-1,5-bisphosphate (RuBP). The unstable six-carbon intermediate splits into two molecules of 3-phosphoglycerate (3-PGA).</p>
+<h4>Reduction</h4><p>3-PGA is phosphorylated by ATP and reduced using NADPH to form triose phosphate.</p>
+<h4>Regeneration</h4><p>Most triose phosphate is rearranged, using ATP, to regenerate RuBP so the cycle can continue. A smaller fraction contributes to carbohydrate synthesis.</p>
+<p>For net fixation of three CO₂, the cycle consumes ATP and NADPH and yields one net triose-phosphate equivalent.</p>`],
+["3.9 C4 Pathway",`<p>C4 plants use spatial separation between initial CO₂ fixation and the Calvin cycle. Mesophyll cells initially fix bicarbonate/CO₂ using <b>PEP carboxylase</b> to form oxaloacetate, commonly converted to malate or aspartate.</p>
+<p>C4 acids move to bundle-sheath cells, where they are decarboxylated. The released CO₂ raises the local CO₂ concentration around Rubisco, suppressing its oxygenase reaction and photorespiration.</p>
+<p>C4 plants are often highly productive under high light, high temperature and limited water because their CO₂-concentrating mechanism improves Rubisco efficiency.</p>`],
+["3.10 CAM Pathway",`<p>Crassulacean acid metabolism (CAM) separates CO₂ fixation from the Calvin cycle by <b>time</b> rather than space.</p>
+<ul><li><b>Night:</b> stomata open; CO₂ is fixed by PEP carboxylase and stored mainly as malic acid in vacuoles.</li><li><b>Day:</b> stomata close to conserve water; malate is decarboxylated and the released CO₂ enters the Calvin cycle.</li></ul>
+<p>CAM is a major water-conservation strategy in many succulent and drought-adapted plants.</p>`],
+["3.11 Photorespiration",`<p>Rubisco has both carboxylase and oxygenase activities. When O₂ competes successfully with CO₂, Rubisco oxygenates RuBP, producing one molecule of 3-PGA and one molecule of 2-phosphoglycolate.</p>
+<p>2-phosphoglycolate is recycled through a pathway involving <b>chloroplasts, peroxisomes and mitochondria</b>. The pathway consumes energy and reducing power and releases CO₂; therefore it reduces net carbon gain.</p>
+<p>Photorespiration increases under conditions such as high temperature and low internal CO₂. C4 plants reduce it through CO₂ concentration around Rubisco.</p>`]
+]},
+{id:4,title:"Respiration",icon:"⚡",topics:[
+["4.1 Cellular Respiration Overview",`<p>Respiration is the controlled oxidation of organic molecules to capture energy in ATP and reducing equivalents. In aerobic plant respiration, glycolysis occurs in the cytosol and mitochondrial pathways oxidize pyruvate-derived carbon.</p>
+<p>Major stages: <b>glycolysis → pyruvate oxidation → TCA cycle → electron transport → oxidative phosphorylation</b>. The exact ATP yield varies with cellular conditions and shuttle mechanisms.</p>`],
+["4.2 Glycolysis",`<p>Glycolysis occurs in the cytosol and converts one glucose (6C) into two pyruvate molecules (3C each). It does not directly require O₂.</p>
+<h4>Energy-investment phase</h4><p>Glucose is phosphorylated and rearranged; ATP is invested to prepare the molecule for cleavage.</p>
+<h4>Cleavage and payoff</h4><p>The six-carbon intermediate is split into two three-carbon molecules. Oxidation generates NADH, and substrate-level phosphorylation generates ATP.</p>
+<div class="formula"><b>Net per glucose:</b> 2 pyruvate + 2 ATP + 2 NADH (plus water, depending on accounting convention)</div>
+<p>Glycolysis supplies both ATP and metabolic intermediates for other pathways.</p>`],
+["4.3 Anaerobic Respiration and Fermentation",`<p>When oxygen availability is insufficient, mitochondrial electron transport cannot efficiently reoxidize NADH. Fermentation provides a route to regenerate NAD⁺ so glycolysis can continue.</p>
+<h4>Alcoholic fermentation</h4><p>Pyruvate → acetaldehyde + CO₂ → ethanol. The second step uses NADH and regenerates NAD⁺.</p>
+<p>Fermentation yields only the ATP made by glycolysis and is therefore much less energy-efficient than aerobic respiration.</p>`],
+["4.4 TCA / Krebs / Citric Acid Cycle",`<p>The TCA cycle occurs mainly in the mitochondrial matrix. Pyruvate is first converted to acetyl-CoA, which enters the cycle by condensing with oxaloacetate to form citrate.</p>
+<p>Through successive oxidation and rearrangement reactions, the cycle regenerates oxaloacetate. Carbon is released as CO₂ and electrons are transferred to NAD⁺ and FAD, forming NADH and FADH₂. One substrate-level phosphorylation event occurs per acetyl-CoA.</p>
+<h4>Per acetyl-CoA</h4><p>Typically: <b>3 NADH + 1 FADH₂ + 1 GTP/ATP + 2 CO₂</b>.</p>
+<p>Its importance extends beyond energy: TCA intermediates feed amino-acid, organic-acid and other biosynthetic pathways.</p>`],
+["4.5 Electron Transport Chain",`<p>Mitochondrial electron transport proteins are located in the inner mitochondrial membrane. Electrons from NADH and FADH₂ pass through redox carriers toward oxygen, the terminal electron acceptor.</p>
+<p>Electron transfer is coupled to proton pumping, producing an electrochemical gradient across the inner membrane. Oxygen is reduced to water at the end of the chain.</p>
+<div class="formula">NADH/FADH₂ → electron carriers → O₂ → H₂O<br>Electron transfer → proton gradient → ATP synthase → ATP</div>`],
+["4.6 Oxidative Phosphorylation",`<p>Oxidative phosphorylation is ATP formation coupled to electron oxidation. The <b>chemiosmotic hypothesis</b> states that electron transport establishes a proton-motive force, and ATP synthase uses proton flow to drive ADP + Pi → ATP.</p>
+<p>Respiratory control, membrane integrity, substrate availability and uncoupling influence ATP production. In plant mitochondria, alternative oxidase provides an alternative electron pathway that can reduce ATP conservation while supporting respiratory flexibility.</p>`],
+["4.7 Glyoxylate Cycle",`<p>The glyoxylate cycle is a modified TCA cycle that conserves carbon by bypassing the two CO₂-releasing steps of the TCA cycle.</p>
+<p>Two characteristic enzymes are <b>isocitrate lyase</b> and <b>malate synthase</b>. In germinating oil seeds, stored fatty acids are converted through β-oxidation to acetyl-CoA; the glyoxylate pathway helps convert acetyl units into four-carbon compounds such as succinate, which can contribute to gluconeogenesis.</p>
+<p>This is particularly important before young seedlings become fully photosynthetic.</p>`],
+["4.8 Oxidative Pentose Phosphate Pathway",`<p>The oxidative pentose phosphate pathway (OPPP) occurs in the cytosol and plastids, depending on tissue and metabolic state. It has an <b>oxidative phase</b> and a <b>non-oxidative phase</b>.</p>
+<p>The oxidative phase produces <b>NADPH</b> and pentose phosphates and releases CO₂. The non-oxidative reactions interconvert sugars of different carbon lengths.</p>
+<h4>Functions</h4><ul><li>Provides NADPH for reductive biosynthesis and antioxidant defense.</li><li>Produces ribose-related intermediates and connects carbohydrate metabolism with biosynthetic pathways.</li><li>Helps maintain cellular redox balance.</li></ul>`]
+]},
+{id:5,title:"Plant Growth Regulators",icon:"🌿",topics:[
+["5.1 Plant Growth Regulators: Overview",`<p>Plant growth regulators (PGRs) are naturally occurring or synthetic substances that modify growth and development at very low concentrations. Major classical hormones in this syllabus are <b>auxins, gibberellins, cytokinins, ABA and ethylene</b>.</p>
+<p>Hormones rarely act alone. Responses depend on concentration, tissue sensitivity, developmental stage, environmental conditions and interaction with other hormones.</p>`],
+["5.2 Auxins: Discovery and Roles",`<p>Auxin research arose from observations of phototropism in coleoptiles. Darwin and Darwin showed that the coleoptile tip perceived light; Boysen-Jensen and Paál provided evidence for a mobile chemical signal; Went demonstrated growth-promoting activity using agar blocks. The principal natural auxin is <b>IAA (indole-3-acetic acid)</b>.</p>
+<h4>Physiological roles</h4><ul><li>Promotes cell elongation in shoots at appropriate concentrations.</li><li>Maintains apical dominance.</li><li>Promotes adventitious root formation at suitable concentrations.</li><li>Participates in tropic responses through differential growth.</li><li>Influences vascular differentiation and cambial activity.</li><li>Can promote fruit set and development; synthetic auxins can be used in some agricultural applications.</li></ul>`],
+["5.3 Gibberellins",`<p>Gibberellins were discovered through studies of abnormal elongation in rice caused by the fungus <i>Gibberella fujikuroi</i>. Many gibberellins exist; GA₃ is a familiar bioactive example.</p>
+<h4>Roles</h4><ul><li>Promote stem and internode elongation.</li><li>Promote bolting in rosette plants.</li><li>Promote germination in many seeds by helping activate hydrolytic enzymes in cereal aleurone.</li><li>Can overcome some forms of seed or bud dormancy.</li><li>Influence flowering in certain species and fruit growth.</li></ul>`],
+["5.4 Cytokinins",`<p>Cytokinins are adenine derivatives that promote cell division when interacting with other factors, especially auxin.</p>
+<h4>Roles</h4><ul><li>Promote cell division and differentiation.</li><li>Promote shoot formation in appropriate tissue-culture ratios.</li><li>Delay leaf senescence and help maintain photosynthetic capacity.</li><li>Promote nutrient mobilization toward cytokinin-rich tissues.</li><li>Participate in apical meristem activity and developmental signaling.</li></ul>
+<p>The auxin:cytokinin balance is classically used to explain root versus shoot organogenesis in tissue culture, although real responses are context-dependent.</p>`],
+["5.5 Abscisic Acid (ABA)",`<p>ABA is a major stress-response and developmental regulator. It accumulates or signals strongly during water deficit.</p>
+<h4>Roles</h4><ul><li>Promotes stomatal closure during drought through guard-cell signaling.</li><li>Promotes seed maturation and accumulation of storage compounds.</li><li>Maintains seed dormancy and inhibits premature germination.</li><li>Coordinates responses to salinity, dehydration and other stresses.</li></ul>
+<p>ABA signaling involves receptor proteins, phosphatases and kinases that ultimately regulate ion channels and gene expression.</p>`],
+["5.6 Ethylene",`<p>Ethylene is a gaseous plant hormone. It is produced from methionine-derived intermediates and can diffuse through tissues and air spaces.</p>
+<h4>Roles</h4><ul><li>Promotes climacteric fruit ripening.</li><li>Promotes senescence and abscission in many contexts.</li><li>Participates in responses to mechanical stress, flooding and pathogens.</li><li>Produces the classic seedling <b>triple response</b>: reduced elongation, increased radial swelling and an exaggerated apical hook.</li></ul>`],
+["5.7 Plant Responses to Light and Temperature",`<p>Light is both an energy source and an environmental signal. Plants perceive light using photoreceptors including phytochromes and blue-light receptors. Light regulates seed germination, chloroplast development, shade responses, circadian rhythms and flowering.</p>
+<p>Temperature affects membrane properties, enzyme activity, metabolic rates and developmental timing. Plants can sense prolonged temperature conditions and integrate them with photoperiodic signals to control flowering and dormancy.</p>`],
+["5.8 Photoperiodism",`<p><b>Photoperiodism</b> is the response of plants to the relative duration of light and darkness, especially the timing of flowering. Importantly, many flowering responses are more closely related to the <b>length of the uninterrupted night</b> than simply the length of the day.</p>
+<table><tr><th>Type</th><th>Typical requirement</th><th>Example</th></tr><tr><td>Short-day plant (SDP)</td><td>Flowers when day is shorter than a critical value / night sufficiently long</td><td>Chrysanthemum, rice (classic examples)</td></tr><tr><td>Long-day plant (LDP)</td><td>Flowers when day exceeds a critical value / night sufficiently short</td><td>Wheat, spinach (classic examples)</td></tr><tr><td>Day-neutral</td><td>Flowering not primarily controlled by photoperiod</td><td>Tomato, cucumber (classic examples)</td></tr></table>
+<p>A night-break with red light can alter flowering responses, and far-red light can often reverse the effect, demonstrating phytochrome involvement.</p>`],
+["5.9 Phytochrome: Discovery, Structure and Forms",`<p>Phytochrome is a reversible red/far-red light photoreceptor. It is a chromoprotein containing a linear tetrapyrrole chromophore covalently associated with a protein.</p>
+<p>Two interconvertible forms are conventionally represented as <b>Pr</b> and <b>Pfr</b>. Pr preferentially absorbs red light around 660 nm and is converted toward Pfr. Pfr preferentially absorbs far-red light around 730 nm and is converted toward Pr.</p>
+<div class="formula">Red light: Pr → Pfr<br>Far-red light: Pfr → Pr</div>
+<p>Pfr is often the physiologically active form, but the biological outcome depends on the species, tissue and response pathway. Phytochrome controls seed germination, shade avoidance, flowering signals and photomorphogenesis.</p>`],
+["5.10 Red/Far-Red Reversibility and Photomorphogenesis",`<p><b>Photomorphogenesis</b> means development controlled by light. In dark-grown seedlings, the plant often shows etiolation: elongated hypocotyl, closed cotyledons and reduced chloroplast development. Light can reverse these traits through de-etiolation.</p>
+<p>Red/far-red reversibility is a classic phytochrome phenomenon. If a red pulse promotes a response and a subsequent far-red pulse reverses it, the final response often depends on the last effective light treatment.</p>
+<p>Shade conditions can change the red:far-red ratio perceived by phytochrome, influencing elongation and competitive growth.</p>`],
+["5.11 Vernalization",`<p><b>Vernalization</b> is the promotion or acceleration of flowering by exposure of a plant or appropriate tissue to a prolonged, non-freezing low-temperature treatment.</p>
+<p>It is important in many winter annuals and biennials. After vernalization, plants may require appropriate photoperiod and other conditions before flowering occurs.</p>
+<h4>Importance</h4><ul><li>Shortens the vegetative period of certain crops.</li><li>Synchronizes flowering with favourable seasons.</li><li>Helps explain environmental control of reproductive development.</li></ul>`]
+]},
+{id:6,title:"Biomolecules & Enzymes",icon:"🧪",topics:[
+["6.1 Carbohydrates: Structure and Classification",`<p>Carbohydrates are polyhydroxy aldehydes, ketones or compounds that yield them on hydrolysis. They are classified broadly as monosaccharides, oligosaccharides and polysaccharides.</p>
+<h4>Monosaccharides</h4><p>Single sugar units such as glucose, fructose and ribose. They may be classified by carbon number (triose, pentose, hexose) and by functional group (aldose or ketose).</p>
+<h4>Disaccharides</h4><p>Two monosaccharides linked by a glycosidic bond. Sucrose is especially important in plants as a transport sugar.</p>
+<h4>Polysaccharides</h4><p>Long chains or networks. <b>Starch</b> is a major storage carbohydrate; <b>cellulose</b> is a structural component of cell walls; hemicelluloses and pectins also contribute to wall structure.</p>`],
+["6.2 Biological Roles of Carbohydrates",`<ul><li><b>Energy:</b> glucose oxidation provides metabolic energy.</li><li><b>Storage:</b> starch stores carbon and energy in plants.</li><li><b>Transport:</b> sucrose is a major phloem-translocated carbohydrate.</li><li><b>Structure:</b> cellulose forms strong microfibrils in plant cell walls.</li><li><b>Precursors:</b> sugars supply carbon skeletons for amino acids, lipids and nucleotides.</li><li><b>Recognition/signaling:</b> oligosaccharides participate in molecular recognition and cell-surface interactions.</li></ul>`],
+["6.3 Amino Acids",`<p>Amino acids are the monomeric building blocks of proteins. A typical α-amino acid contains an amino group, carboxyl group, hydrogen and variable <b>R group</b> attached to the α-carbon.</p>
+<p>At physiological pH, many amino acids exist as <b>zwitterions</b>, containing both positive and negative charges. Side chains determine polarity, charge, hydrophobicity and reactivity.</p>
+<h4>Functional classes</h4><p>They can be grouped as nonpolar, polar uncharged, acidic and basic according to side-chain properties. They can also be described as essential/nonessential in animal nutrition, but plants generally synthesize the amino acids they require.</p>`],
+["6.4 Peptide Bond and Proteins",`<p>A peptide bond forms by condensation between the carboxyl group of one amino acid and amino group of another, releasing water. Repeated peptide bonds create polypeptide chains.</p>
+<h4>Protein structural levels</h4><ol><li><b>Primary:</b> amino-acid sequence.</li><li><b>Secondary:</b> local structures such as α-helices and β-sheets stabilized mainly by backbone hydrogen bonds.</li><li><b>Tertiary:</b> overall three-dimensional folding of one polypeptide, stabilized by hydrophobic interactions, hydrogen bonds, ionic interactions and disulfide bonds where present.</li><li><b>Quaternary:</b> association of multiple polypeptide subunits.</li></ol>
+<p>Protein shape is closely related to function; heat, extreme pH and chemicals can disrupt structure (denaturation).</p>`],
+["6.5 Lipids",`<p>Lipids are a diverse group of largely hydrophobic or amphipathic molecules. Major categories include triacylglycerols, phospholipids, waxes and sterols.</p>
+<ul><li><b>Triacylglycerols:</b> major energy reserves.</li><li><b>Phospholipids:</b> important membrane components; amphipathic structure supports bilayer formation.</li><li><b>Waxes:</b> protective hydrophobic coatings on aerial surfaces.</li><li><b>Sterols:</b> membrane components and hormone/signaling precursors in many organisms.</li></ul>
+<p>Plant oils often contain substantial unsaturated fatty acids, which influence membrane and storage properties.</p>`],
+["6.6 Enzymes: Structure and Properties",`<p>Enzymes are biological catalysts that accelerate reactions by lowering the activation energy without being consumed overall.</p>
+<h4>Properties</h4><ul><li>High catalytic efficiency.</li><li>Substrate and reaction specificity, though not always absolute.</li><li>Activity depends on temperature, pH, substrate concentration and regulators.</li><li>Many require cofactors such as metal ions or organic coenzymes.</li><li>They operate under cellular conditions and can be regulated rapidly.</li></ul>
+<p>The <b>active site</b> contains residues that bind substrates and participate in catalysis. The enzyme-substrate complex provides a framework for lowering the energy barrier.</p>`],
+["6.7 Mechanism of Enzyme Action",`<p>The basic sequence is:</p><div class="formula">E + S ⇌ ES → EP → E + P</div>
+<p>The <b>lock-and-key model</b> emphasizes structural complementarity between enzyme and substrate. The <b>induced-fit model</b> emphasizes conformational adjustment upon substrate binding, positioning catalytic groups and stabilizing the transition state.</p>
+<p>Enzymes can stabilize transition states through acid-base catalysis, covalent catalysis, metal-ion assistance, proximity/orientation effects and electrostatic interactions.</p>`],
+["6.8 Enzyme Kinetics",`<p>As substrate concentration rises, reaction velocity initially increases because more active sites are occupied. At high substrate concentration, enzymes approach saturation.</p>
+<div class="formula"><b>Michaelis–Menten model:</b> v = Vmax[S] / (Km + [S])</div>
+<p><b>Vmax</b> is the maximum velocity under the stated conditions. <b>Km</b> is the substrate concentration at which velocity is half Vmax in the simple Michaelis–Menten model. A lower Km often indicates higher apparent affinity, but Km is not universally identical to a pure binding constant.</p>`],
+["6.9 Coenzymes and Cofactors",`<p>A <b>cofactor</b> is a non-protein component required by some enzymes. Cofactors may be inorganic ions (such as Mg²⁺ or Zn²⁺) or organic molecules.</p>
+<p><b>Coenzymes</b> are organic cofactors. Many are vitamin-derived and transfer electrons or chemical groups. Examples include <b>NAD⁺/NADH</b>, <b>FAD/FADH₂</b> and <b>coenzyme A</b>.</p>
+<p>A tightly bound organic cofactor is sometimes called a <b>prosthetic group</b>. The protein portion of a conjugated enzyme is the apoenzyme; apoenzyme plus required cofactor forms the active holoenzyme.</p>`],
+["6.10 Allosteric Enzymes",`<p>Allosteric enzymes contain regulatory binding sites separate from the catalytic active site. Binding of an activator or inhibitor changes protein conformation and therefore activity.</p>
+<p>Many allosteric enzymes show <b>cooperativity</b>, where binding at one site influences binding/activity at other sites. This makes them useful as control points in metabolic pathways.</p>
+<p>Feedback inhibition is a common principle: a final product of a pathway inhibits an early regulatory enzyme, preventing unnecessary accumulation and energy expenditure.</p>`],
+["6.11 Isozymes",`<p><b>Isozymes (isoenzymes)</b> are distinct molecular forms of an enzyme that catalyze the same overall reaction but differ in amino-acid sequence, structure, kinetic properties, regulation or tissue distribution.</p>
+<p>Different isozymes allow the same reaction to be adapted to different cellular environments or developmental states.</p>`],
+["6.12 Enzyme Inhibition",`<table><tr><th>Type</th><th>Basic mechanism</th><th>Typical kinetic effect</th></tr><tr><td>Competitive</td><td>Inhibitor competes with substrate at/near active site</td><td>Apparent Km increases; Vmax often unchanged in simple competitive inhibition</td></tr><tr><td>Noncompetitive (idealized)</td><td>Inhibitor reduces activity without simply competing for substrate site</td><td>Vmax decreases; Km can remain unchanged in the ideal pure case</td></tr></table>
+<p>Competitive inhibition can often be overcome by sufficiently increasing substrate concentration. In noncompetitive inhibition, increasing substrate does not simply restore the original maximum activity.</p>
+<p>Real inhibitors can show mixed, uncompetitive or irreversible behavior, so exam answers should state the model being used.</p>`]
+]}
+];
+
+const questions=[
+[1,"long","Explain water potential and its components. Include solute potential and pressure potential."],
+[1,"long","Describe transpiration and discuss the major external and internal factors affecting it."],
+[1,"long","Explain stomatal opening and closing with a suitable mechanism."],
+[1,"long","What is root pressure? Explain its formation and significance."],
+[1,"short","Define water potential, plasmolysis, deplasmolysis and guttation."],
+[1,"short","Differentiate guttation and transpiration."],
+[2,"long","Explain the criteria of essentiality of mineral elements and classify macro- and micronutrients."],
+[2,"long","Discuss the roles and deficiency symptoms of major essential mineral elements."],
+[2,"long","Compare passive and active transport. Explain channels, carriers and pumps."],
+[2,"long","Explain the pressure-flow hypothesis for sugar translocation."],
+[2,"short","Write short notes on H⁺ pumps, ion channels and carriers."],
+[2,"short","Differentiate macronutrients and micronutrients with examples."],
+[3,"long","Describe photosynthetic pigments and explain the organization of antenna molecules and reaction centres."],
+[3,"long","Explain Photosystem I, Photosystem II and linear electron transport."],
+[3,"long","Explain photophosphorylation and the chemiosmotic mechanism of ATP synthesis."],
+[3,"long","Describe the C3 pathway and explain the Calvin cycle."],
+[3,"long","Compare C3, C4 and CAM pathways."],
+[3,"long","Explain photorespiration and discuss its significance."],
+[3,"short","Write notes on chlorophyll a, chlorophyll b, xanthophylls and carotenes."],
+[4,"long","Describe glycolysis, including its phases and net products."],
+[4,"long","Explain the TCA cycle and its significance."],
+[4,"long","Describe mitochondrial electron transport and oxidative phosphorylation."],
+[4,"long","Explain the glyoxylate cycle and its role in germinating oil seeds."],
+[4,"long","Describe the oxidative pentose phosphate pathway."],
+[4,"short","What is fermentation? Why is NAD⁺ regeneration important?"],
+[5,"long","Discuss the discovery and physiological roles of auxins."],
+[5,"long","Explain the physiological roles of gibberellins, cytokinins, ABA and ethylene."],
+[5,"long","Explain photoperiodism and compare short-day, long-day and day-neutral plants."],
+[5,"long","Describe phytochrome structure and red/far-red reversible responses."],
+[5,"long","Explain photomorphogenesis and vernalization."],
+[5,"short","Write a note on the triple response of ethylene."],
+[6,"long","Classify carbohydrates and explain their biological importance."],
+[6,"long","Describe amino-acid structure and classification and explain peptide-bond formation."],
+[6,"long","Explain primary, secondary, tertiary and quaternary protein structure."],
+[6,"long","Classify lipids and discuss their biological functions."],
+[6,"long","Explain enzyme structure, properties and mechanism of action."],
+[6,"long","Compare competitive and noncompetitive enzyme inhibition."],
+[6,"short","Write short notes on coenzymes, allosteric enzymes and isozymes."]
+];
+
+let done=JSON.parse(localStorage.getItem("botanyDone")||"{}");
+function save(){localStorage.setItem("botanyDone",JSON.stringify(done));updateProgress()}
+function unitProgress(u){return Math.round(u.topics.filter((_,i)=>done[u.id+"-"+i]).length/u.topics.length*100)}
+function card(u){
+return `<div class="card unit" onclick="openUnit(${u.id})"><div class="unit-icon">${u.icon}</div><span class="tag">UNIT ${u.id}</span><h3>${u.title}</h3><p class="muted">${u.topics.length} core topics • Detailed notes</p><div class="bar"><i style="width:${unitProgress(u)}%"></i></div><small class="muted">${unitProgress(u)}% completed</small></div>`
+}
+function renderUnits(){document.getElementById("unitList").innerHTML=units.map(card).join("");document.getElementById("homeUnits").innerHTML=units.map(card).join("")}
+function openUnit(id){
+const u=units.find(x=>x.id===id);document.getElementById("unitContent").innerHTML=
+`<div class="section-title"><div><span class="tag">UNIT ${u.id}</span><h2>${u.icon} ${u.title}</h2><p class="muted">Complete each topic to track your study progress.</p></div><button class="btn gold" onclick="showView('questions');setTimeout(()=>{document.getElementById('qSearch').value='Unit ${u.id}';renderQuestions()},50)">Exam Questions</button></div>
+<div class="topic-grid">${u.topics.map((t,i)=>`<article class="card topic"><label style="float:right"><input type="checkbox" ${done[u.id+"-"+i]?"checked":""} onchange="done['${u.id}-${i}']=this.checked;save();renderUnits();openUnit(${u.id})"> Complete</label><h3>${i+1}. ${t[0]}</h3><p>${t[1]}</p>${i===1&&u.id===1?'<div class="formula">Ψw = Ψs + Ψp<br><br>Water moves from higher Ψw → lower Ψw.</div>':''}</article>`).join("")}</div>`;
+showView("unitDetail")
+}
+function renderQuestions(){
+const term=document.getElementById("qSearch").value.toLowerCase(), filter=document.getElementById("qFilter").value;
+const out=questions.filter(q=>(filter==="all"||q[1]===filter)&&q[2].toLowerCase().includes(term)).map((q,i)=>`<div class="q" onclick="this.classList.toggle('open')"><strong>Unit ${q[0]} • ${q[1]==='long'?'Long Answer':'Short Answer'}</strong><div>${q[2]}</div><div class="answer"><b>Answer focus:</b> Start with a definition, develop the mechanism/pathway in logical sequence, add a labelled diagram or comparison table where appropriate, then finish with significance or applications.</div></div>`).join("");
+document.getElementById("questionList").innerHTML=out||'<div class="empty">No questions match your search.</div>';
+}
+const quiz=[
+["Which equation represents water potential for a typical plant cell?","Ψw = Ψs + Ψp",["Ψw = Ψs − Ψp","Ψw = Ψs + Ψp","Ψw = Ψp − Ψs","Ψw = Ψs × Ψp"]],
+["Which photosystem has the P680 reaction centre?","Photosystem II",["Photosystem I","Photosystem II","Both exclusively","Neither"]],
+["What is the first stable product of C3 carbon fixation?","3-phosphoglycerate",["Oxaloacetate","Pyruvate","3-phosphoglycerate","Malate"]],
+["Which hormone is strongly associated with stomatal closure during drought?","ABA",["Auxin","Gibberellin","ABA","Ethylene"]],
+["Where does glycolysis occur?","Cytosol",["Chloroplast thylakoid","Cytosol","Mitochondrial matrix","Nucleus"]],
+["Which enzyme is characteristic of the glyoxylate cycle?","Isocitrate lyase",["Rubisco","Isocitrate lyase","ATP synthase","PEP carboxylase"]],
+["What do competitive inhibitors generally compete for?","The active site",["The nucleus","The active site","The cell wall","The ribosome"]]
+];
+let qi=0,score=0,answered=false;
+function renderQuiz(){
+if(qi>=quiz.length){document.getElementById("quizCard").innerHTML=`<h3>Quiz complete! 🌿</h3><div class="result"><b>Your score: ${score}/${quiz.length}</b><br>${score===quiz.length?"Perfect!":score>=5?"Excellent work!":"Good start — revise the missed concepts and try again."}</div><button class="btn primary" onclick="qi=0;score=0;renderQuiz()" style="margin-top:15px">Restart Quiz</button>`;return}
+const [q,a,opts]=quiz[qi];document.getElementById("quizCard").innerHTML=`<div class="tag">QUESTION ${qi+1} / ${quiz.length}</div><h3>${q}</h3>${opts.map(o=>`<button class="option" onclick="answer(this,'${o.replaceAll("'","&#39;")}','${a.replaceAll("'","&#39;")}')">${o}</button>`).join("")}<div id="feedback"></div>`
+}
+function answer(btn,choice,correct){
+if(answered)return;answered=true;document.querySelectorAll(".option").forEach(x=>x.disabled=true);
+if(choice===correct){btn.classList.add("correct");score++;document.getElementById("feedback").innerHTML='<div class="result">✓ Correct! Great recall.</div>'}else{btn.classList.add("wrong");document.getElementById("feedback").innerHTML=`<div class="result">Not quite. Correct answer: <b>${correct}</b></div>`}
+setTimeout(()=>{qi++;answered=false;renderQuiz()},1100)
+}
+function updateProgress(){
+const total=units.reduce((n,u)=>n+u.topics.length,0), complete=Object.values(done).filter(Boolean).length;
+document.getElementById("progressStat").textContent=Math.round(complete/total*100)+"%"
+}
+function showView(id){
+document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(id).classList.add("active");
+document.querySelectorAll(".navlinks button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));
+window.scrollTo({top:0,behavior:"smooth"});
+if(id==="questions")renderQuestions();if(id==="quiz")renderQuiz();if(id==="units")renderUnits()
+}
+renderUnits();renderQuestions();renderQuiz();updateProgress();
+</script>
+</body>
+</html>
